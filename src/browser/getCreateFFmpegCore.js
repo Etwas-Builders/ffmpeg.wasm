@@ -34,9 +34,9 @@ module.exports = async ({ corePath: _corePath }) => {
     'application/javascript',
   );
   if (typeof createFFmpegCore === 'undefined') {
-     const timeoutPromise = new Promise((_, reject) => {
+    const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
-        reject(new Error(`Loading FFmpeg Failed!`));
+        reject(new Error('Loading FFmpeg Failed!'));
       }, 60000);
     });
     const loadFFmpeg = new Promise((resolve) => {
@@ -56,8 +56,7 @@ module.exports = async ({ corePath: _corePath }) => {
       script.addEventListener('load', eventHandler);
       document.getElementsByTagName('head')[0].appendChild(script);
     });
-    return await Promise.race([loadFFmpeg, timeoutPromise]);
-
+    return Promise.race([loadFFmpeg, timeoutPromise]);
   }
   log('info', 'ffmpeg-core.js script is loaded already');
   return Promise.resolve({
