@@ -1,6 +1,6 @@
 {
-  "name": "@ffmpeg/ffmpeg",
-  "version": "0.8.3",
+  "name": "@modfy/ffmpeg",
+  "version": "0.1.0",
   "description": "FFmpeg WebAssembly version",
   "main": "src/index.js",
   "directories": {
@@ -22,32 +22,22 @@
   "browser": {
     "./src/node/index.js": "./src/browser/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ffmpegwasm/ffmpeg.wasm.git"
-  },
   "keywords": [
     "ffmpeg",
     "WebAssembly",
     "video"
   ],
-  "author": "Jerome Wu <jeromewus@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ffmpegwasm/ffmpeg.wasm/issues"
-  },
   "engines": {
     "node": ">=12.16.1"
   },
-  "homepage": "https://github.com/ffmpegwasm/ffmpeg.wasm#readme",
   "dependencies": {
-    "@ffmpeg/core": "^0.7.1",
-    "idb": "^4.0.5",
     "is-electron": "^2.2.0",
-    "is-url": "^1.2.4",
-    "node-fetch": "^2.6.0",
     "regenerator-runtime": "^0.13.5",
     "resolve-url": "^0.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

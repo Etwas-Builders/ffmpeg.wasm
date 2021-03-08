@@ -8,7 +8,7 @@ const {
   defaultOptions,
   getModule,
   fetchFile,
-} = require('./node');
+} = require('./browser');
 
 const NO_LOAD = Error('FFmpeg.js is not ready, make sure you have completed load().');
 const NO_MULTIPLE_RUN = Error('FFmpeg.js can only run one command at a time');
