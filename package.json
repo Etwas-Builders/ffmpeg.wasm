@@ -1,6 +1,6 @@
 {
   "name": "@modfy/ffmpeg",
-  "version": "0.1.2-d",
+  "version": "0.1.2-e",
   "description": "FFmpeg WebAssembly version",
   "main": "src/index.js",
   "directories": {
