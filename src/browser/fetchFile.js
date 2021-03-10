@@ -31,7 +31,7 @@ module.exports = async (_data) => {
         .split('')
         .map((c) => c.charCodeAt(0));
     } else {
-      const res = await fetch(new URL(_data));
+      const res = await fetch(new URL(_data).toString());
       data = await res.arrayBuffer();
     }
   } else if (_data instanceof File || _data instanceof Blob) {

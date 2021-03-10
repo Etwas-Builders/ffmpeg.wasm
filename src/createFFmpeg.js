@@ -41,7 +41,7 @@ module.exports = (_options = {}) => {
 
   const load = async () => {
     if (Module === null) {
-      log('info', 'load ffmpeg-core');
+      log('info', 'load ffmpeg-core', 'with options', JSON.stringify(options));
       Module = await getModule(options);
       Module.setLogger((_log) => {
         detectCompletion(_log);
