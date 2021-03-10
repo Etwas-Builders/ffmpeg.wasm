@@ -1,3 +1,5 @@
+const { default: Bugsnag } = require('@bugsnag/js');
+
 /**
  * readFromBlobOrFile
  *
@@ -24,19 +26,32 @@ module.exports = async (_data) => {
     return 'undefined';
   }
 
-  if (typeof _data === 'string') {
-    // Base64 _data
-    if (/data:_data\/([a-zA-Z]*);base64,([^"]*)/.test(_data)) {
-      data = atob(_data.split(',')[1])
-        .split('')
-        .map((c) => c.charCodeAt(0));
-    } else {
-      const res = await fetch(new URL(_data).toString());
-      data = await res.arrayBuffer();
-    }
-  } else if (_data instanceof File || _data instanceof Blob) {
-    data = await readFromBlobOrFile(_data);
-  }
+  const url = new URL(_data).toString();
 
-  return new Uint8Array(data);
+  try {
+    if (typeof _data === 'string') {
+      // Base64 _data
+      if (/data:_data\/([a-zA-Z]*);base64,([^"]*)/.test(_data)) {
+        data = atob(_data.split(',')[1])
+          .split('')
+          .map((c) => c.charCodeAt(0));
+      } else {
+        const res = await fetch(url);
+        data = await res.arrayBuffer();
+      }
+    } else if (_data instanceof File || _data instanceof Blob) {
+      data = await readFromBlobOrFile(_data);
+    }
+
+    return new Uint8Array(data);
+  } catch (err) {
+    Bugsnag.notify(err, (event) => {
+      event.addMetadata('fetchFile', {
+        data,
+        originalData: _data,
+        url,
+      });
+    });
+    throw new Error(err);
+  }
 };

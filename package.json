@@ -27,6 +27,7 @@
     "node": ">=12.16.1"
   },
   "dependencies": {
+    "@bugsnag/js": "^7.8.0",
     "is-electron": "^2.2.0",
     "regenerator-runtime": "^0.13.5"
   },

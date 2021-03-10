@@ -1,3 +1,4 @@
+const { default: Bugsnag } = require('@bugsnag/js');
 const defaultArgs = require('./constants/defaultArgs');
 const { setLogging, log } = require('./utils/log');
 const resolvePaths = require('./utils/resolvePaths');
@@ -40,19 +41,28 @@ module.exports = (_options = {}) => {
   setLogging(logging);
 
   const load = async () => {
-    if (Module === null) {
-      log('info', 'load ffmpeg-core', 'with options', JSON.stringify(options));
-      Module = await getModule(options);
-      Module.setLogger((_log) => {
-        detectCompletion(_log);
-        parseProgress(_log, progress);
-        logger(_log);
-        log(_log.type, _log.message);
-      });
-      if (ffmpeg === null) {
-        ffmpeg = Module.cwrap('proxy_main', 'number', ['number', 'number']);
+    try {
+      if (Module === null) {
+        log('info', 'load ffmpeg-core', 'with options', JSON.stringify(options));
+        Module = await getModule(options);
+        Module.setLogger((_log) => {
+          detectCompletion(_log);
+          parseProgress(_log, progress);
+          logger(_log);
+          log(_log.type, _log.message);
+        });
+        if (ffmpeg === null) {
+          ffmpeg = Module.cwrap('proxy_main', 'number', ['number', 'number']);
+        }
+        log('info', 'ffmpeg-core loaded');
       }
-      log('info', 'ffmpeg-core loaded');
+    } catch (err) {
+      Bugsnag.notify(err, (event) => {
+        event.addMetadata('pre load', {
+          options,
+        });
+      });
+      throw new Error(err);
     }
   };
 
