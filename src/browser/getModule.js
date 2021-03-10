@@ -1,4 +1,3 @@
-const { default: Bugsnag } = require('@bugsnag/js');
 const { log } = require('../utils/log');
 
 module.exports = async ({ corePath }) => {
@@ -36,11 +35,6 @@ module.exports = async ({ corePath }) => {
     log('info', 'ffmpeg-core is loaded already');
     return Promise.resolve(window.Module);
   } catch (err) {
-    Bugsnag.notify(err, (event) => {
-      event.addMetadata('loadingFFmpeg', {
-        corePath,
-      });
-    });
     throw new Error(err);
   }
 };

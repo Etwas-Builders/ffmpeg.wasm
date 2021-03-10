@@ -1,4 +1,3 @@
-const { default: Bugsnag } = require('@bugsnag/js');
 const defaultArgs = require('./constants/defaultArgs');
 const { setLogging, log } = require('./utils/log');
 const resolvePaths = require('./utils/resolvePaths');
@@ -57,11 +56,6 @@ module.exports = (_options = {}) => {
         log('info', 'ffmpeg-core loaded');
       }
     } catch (err) {
-      Bugsnag.notify(err, (event) => {
-        event.addMetadata('pre load', {
-          options,
-        });
-      });
       throw new Error(err);
     }
   };

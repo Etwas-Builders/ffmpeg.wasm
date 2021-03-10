@@ -1,5 +1,3 @@
-const { default: Bugsnag } = require('@bugsnag/js');
-
 /**
  * readFromBlobOrFile
  *
@@ -45,13 +43,6 @@ module.exports = async (_data) => {
 
     return new Uint8Array(data);
   } catch (err) {
-    Bugsnag.notify(err, (event) => {
-      event.addMetadata('fetchFile', {
-        data,
-        originalData: _data,
-        url,
-      });
-    });
     throw new Error(err);
   }
 };
